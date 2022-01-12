@@ -132,6 +132,7 @@ module Octopus
     end
 
     def initialize_shards(config)
+      puts "Octopus Debugging proxy_config line 135: #{config}"
       @original_config = config
 
       self.shards = HashWithIndifferentAccess.new
@@ -146,7 +147,7 @@ module Octopus
       end
 
       self.shards_config ||= []
-      puts "Octopus Debugging: #{shards_config}"
+      puts "Octopus Debugging proxy_config line 150: #{shards_config}"
       
       shards_config.each do |key, value|
         if value.is_a?(String)
@@ -218,6 +219,8 @@ module Octopus
     private
 
     def connection_pool_for(config, adapter)
+      puts "Octopus Debugging proxy_config line 222: #{config}"
+      puts "Octopus Debugging proxy_config line 223: #{adapter}"
       if Octopus.rails4?
         spec = ActiveRecord::ConnectionAdapters::ConnectionSpecification.new(config.dup, adapter )
       else
@@ -225,13 +228,14 @@ module Octopus
         spec = ActiveRecord::ConnectionAdapters::ConnectionSpecification.new(name, config.dup, adapter)
       end
 
+      puts "Octopus Debugging proxy_config line 231: #{spec}"
+      puts "Octopus Debugging proxy_config line 232: #{ActiveRecord::ConnectionAdapters::ConnectionPool.new(spec)}"
       ActiveRecord::ConnectionAdapters::ConnectionPool.new(spec)
+      
     end
 
     def resolve_string_connection(spec)
-      puts "Octopus Debugging: #{spec}"
       resolver = ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new({})
-      puts "Octopus Debugging: #{HashWithIndifferentAccess.new(resolver.spec(spec).config)}"
       HashWithIndifferentAccess.new(resolver.spec(spec).config)
     end
 
