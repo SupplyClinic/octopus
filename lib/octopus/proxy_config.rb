@@ -146,7 +146,8 @@ module Octopus
       end
 
       self.shards_config ||= []
-
+      puts "Octopus Debugging: #{shards_config}"
+      
       shards_config.each do |key, value|
         if value.is_a?(String)
           value = resolve_string_connection(value).merge(:octopus_shard => key)
@@ -228,7 +229,9 @@ module Octopus
     end
 
     def resolve_string_connection(spec)
+      puts "Octopus Debugging: #{spec}"
       resolver = ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver.new({})
+      puts "Octopus Debugging: #{HashWithIndifferentAccess.new(resolver.spec(spec).config)}"
       HashWithIndifferentAccess.new(resolver.spec(spec).config)
     end
 
