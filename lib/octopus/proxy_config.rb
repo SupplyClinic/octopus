@@ -228,8 +228,8 @@ module Octopus
         spec = ActiveRecord::ConnectionAdapters::ConnectionSpecification.new(name, config.dup, adapter)
       end
 
-      puts "Octopus Debugging proxy_config line 231: #{spec}"
-      puts "Octopus Debugging proxy_config line 232: #{ActiveRecord::ConnectionAdapters::ConnectionPool.new(spec)}"
+      puts "Octopus Debugging proxy_config line 231: #{spec.to_yaml}"
+      puts "Octopus Debugging proxy_config line 232: #{ActiveRecord::ConnectionAdapters::ConnectionPool.new(spec).to_yaml}"
       ActiveRecord::ConnectionAdapters::ConnectionPool.new(spec)
       
     end
